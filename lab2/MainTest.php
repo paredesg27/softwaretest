@@ -63,6 +63,43 @@ class MainTest extends TestCase
         //analyze
         $this->assertEquals($result, 98);
     }
+
+    public function test_get_turn(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+            
+        //execute
+        $result = $sut->get_turn();
+        //analyze
+        $this->assertEquals($result, 1);
+    }
+    public function test_get_kept_dice(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        //execute
+        $result = $sut->get_turn();
+        //analyze
+        $this->assertEquals($result, 1);
+    }
+    public function test_get_scorecard(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $sut->update_scorecard("ones", 3);
+        //execute
+        $result = $sut->get_scorecard();
+        //analyze
+        $this->assertEquals($result, 3);
+        
+    }
+    public function test_calculate_chance(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        
+    }
 }
 
 ?>
