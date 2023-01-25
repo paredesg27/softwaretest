@@ -79,9 +79,9 @@ class MainTest extends TestCase
         $d = new YahtzeeDice();
         $sut = new Yahtzee($d);
         //execute
-        $result = $sut->get_turn();
+        $result = $sut->get_kept_dice();
         //analyze
-        $this->assertEquals($result, 1);
+        $this->assertEmpty($result, 0);
     }
     public function test_get_scorecard(){
         //setup class
@@ -91,13 +91,16 @@ class MainTest extends TestCase
         //execute
         $result = $sut->get_scorecard();
         //analyze
-        $this->assertEquals($result, 3);
+       $this->assertEquals($result[0], 3);
         
     }
     public function test_calculate_chance(){
         //setup class
         $d = new YahtzeeDice();
         $sut = new Yahtzee($d);
+        $result = $sut->calculate_chance();
+        //analyze
+       $this->assertEmpty($result, "array sum not empty");
         
     }
 }
