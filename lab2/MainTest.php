@@ -81,7 +81,7 @@ class MainTest extends TestCase
         //execute
         $result = $sut->get_kept_dice();
         //analyze
-        $this->assertEmpty($result, 0);
+        $this->assertEquals(array_sum($result), 0);
     }
     public function test_get_scorecard(){
         //setup class
@@ -91,17 +91,29 @@ class MainTest extends TestCase
         //execute
         $result = $sut->get_scorecard();
         //analyze
-       $this->assertEquals($result[0], 3);
+        $this->assertEquals(array_sum($result), 3);
         
     }
-    public function test_calculate_chance(){
+  public function test_calculate_chance(){
         //setup class
         $d = new YahtzeeDice();
         $sut = new Yahtzee($d);
-        $result = $sut->calculate_chance();
+        //execute
+        $array = array();
+        $result = $array->calculate_chance(6);
         //analyze
-       $this->assertEmpty($result, "array sum not empty");
+        $this->assertEquals(array_sum($result), 1);
         
+    }
+    public function test_roll(){
+         //setup class
+         $d = new YahtzeeDice();
+         $sut = new Yahtzee($d);
+         //execute
+         
+         $result = $sut->roll(1);
+         //analyze
+         $this->assertNotEmpty($result, "array is empty");
     }
 }
 
