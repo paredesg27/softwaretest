@@ -118,6 +118,18 @@ class MainTest extends TestCase
         
         $this-> assertEquals($scorecard["ones"], 3);
     }
+       public function test_update_scorecard_throws_exception(){
+           $this->expectException(YahtzeeException::class);
+         //setup class
+         $d = new YahtzeeDice();
+         $sut = new Yahtzee($d);
+         //execute
+         $sut->update_scorecard("ons", 3);
+         $scorecard= $sut->get_scorecard();
+         //analyze
+        
+        $this-> assertEquals($scorecard["ons"], 3);
+    }
     public function test_calculate_chance(){
         //setup class
         $d = new YahtzeeDice();
@@ -126,10 +138,9 @@ class MainTest extends TestCase
         //execute
         $result = $sut->calculate_chance($array);
         //analyze
-        $this->assertEquals($result, 21);
-        
+        $this->assertEquals($result, 21);   
     }
-     public function test_is_bonus(){
+    public function test_is_bonus(){
         //setup class
         $d = new YahtzeeDice();
         $sut = new Yahtzee($d);
@@ -139,6 +150,17 @@ class MainTest extends TestCase
         //analyze
         $this->assertSame($result,$compare );   
     }
+     public function test_calculate_number(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $compare = false;
+        //execute
+        $result = $sut->is_bonus();
+        //analyze
+        $this->assertSame($result,$compare );   
+    }
+    
 }
 
 ?>
