@@ -166,26 +166,26 @@ class MainTest extends TestCase
         //setup class
         $d = new YahtzeeDice();
         $sut = new Yahtzee($d);
-        $array = array(1,2,3,4,5,4);
+        $array = array(1,2,3,3,4);
         //execute
         $result = $sut->calculate_large_straight($array);
         //analyze
         $this->assertEquals($result, 40);
-        //error except value of 40 but returns 0
+        //error expected value of 40 but returns 0
    }
     public function test_calculate_small_straight(){
          //setup class
          $d = new YahtzeeDice();
          $sut = new Yahtzee($d);
-         $array = array(1,2,3,4,5,4);
+         $array = array(1,2,3,3,4);
          $num = 1;
          //execute
          $result = $sut->calculate_small_straight($array);
          //analyze
          $this->assertEquals($result, 30);
-         //error except value of 40 but returns 0
+         //error expected value of 40 but returns 0
     }
-    public function test_clear_kept_dice(){
+    public function test_clear_kept_dice(){//help77
         $stub = $this->createStub(YahtzeeDice::class);
          $stub->method('kept_dice')->willReturn(array(1,2,3,4,5));
         //setup class
@@ -229,6 +229,31 @@ class MainTest extends TestCase
         //analyze
         $this->assertEquals($result, 25);
     }
+    public function test_longest_straight(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $array = array(1,2,3,4,4,5);
+       
+        //execute
+        $result = $sut->longest_straight_sequence($array);
+        //analyze
+        $this->assertEquals($result, 4);
+        //error expected value of 4 but returns 2 
+        
+    }
+    public function test_array_to_string(){
+        //setup class
+        $array = array(1,2);
+       
+        //execute
+        $result = array_to_string($array);
+        //analyze
+        $this->assertEquals($result, "[1, 2]");
+       
+        
+    }
+    
     
 }
 
