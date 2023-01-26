@@ -129,6 +129,16 @@ class MainTest extends TestCase
         $this->assertEquals($result, 21);
         
     }
+     public function test_is_bonus(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $compare = false;
+        //execute
+        $result = $sut->is_bonus();
+        //analyze
+        $this->assertSame($result,$compare );   
+    }
 }
 
 ?>
