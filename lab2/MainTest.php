@@ -222,12 +222,12 @@ class MainTest extends TestCase
         //setup class
         $d = new YahtzeeDice();
         $sut = new Yahtzee($d);
-        $array = array(1,1,1,2,1,1);
+        $array = array(1,1,2,2,1);
        
         //execute
         $result = $sut->calculate_full_house($array);
         //analyze
-        $this->assertEquals($result, 50);
+        $this->assertEquals($result, 25);
     }
     
 }
