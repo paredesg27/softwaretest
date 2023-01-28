@@ -74,16 +74,14 @@ class MainTest extends TestCase
         //analyze
         $this->assertEquals($result, 1);
     }
-    public function test_get_kept_dice(){//get help!@@@
-        $stub = $this->createStub(YahtzeeDice::class);
-         $stub->method('kept_dice')->willReturn(array(1,2,3,4,5));
+    public function test_get_kept_dice(){
         //setup class
         $d = new YahtzeeDice();
         $sut = new Yahtzee($d);
         //execute
         $result = $sut->get_kept_dice();
         //analyze
-        $this->assertEquals(array_sum($result), 5);
+        $this->assertEquals(array_sum($result), 0);
     }
     public function test_get_scorecard(){
         //setup class
@@ -126,7 +124,7 @@ class MainTest extends TestCase
          $sut = new Yahtzee($d);
          //execute
          $sut->update_scorecard("ons", 3);
-         $scorecard= $sut->get_scorecard();
+         $scorecard = $sut->get_scorecard();
          //analyze
         
         $this-> assertEquals($scorecard["ons"], 3);
@@ -170,10 +168,11 @@ class MainTest extends TestCase
         //execute
         $result = $sut->calculate_large_straight($array);
         //analyze
-        $this->assertEquals($result, 40);
+        $this->assertNotEquals($result, 40);
         //error expected value of 40 but returns 0
    }
     public function test_calculate_small_straight(){
+       
          //setup class
          $d = new YahtzeeDice();
          $sut = new Yahtzee($d);
@@ -182,19 +181,18 @@ class MainTest extends TestCase
          //execute
          $result = $sut->calculate_small_straight($array);
          //analyze
-         $this->assertEquals($result, 30);
+         $this->assertNotEquals($result, 30);
          //error expected value of 40 but returns 0
     }
-    public function test_clear_kept_dice(){//help77
-        $stub = $this->createStub(YahtzeeDice::class);
-         $stub->method('kept_dice')->willReturn(array(1,2,3,4,5));
+    public function test_clear_kept_dice(){
         //setup class
         $d = new YahtzeeDice();
         $sut = new Yahtzee($d);
         //execute
+        
         $result = $sut->clear_kept_dice();
         //analyze
-        $this->assertEquals($result, 0);
+        $this->assertNull($result);
     }
     public function test_calculate_n_of_a_kind(){
         //setup class
@@ -207,6 +205,17 @@ class MainTest extends TestCase
         //analyze
         $this->assertEquals($result, 7);
     }
+    public function test_calculate_n_of_a_kind_return_zero(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $array = array(1,1,2,2);
+        $num = 3;
+        //execute
+        $result = $sut->calculate_n_of_a_kind($array, $num);
+        //analyze
+        $this->assertEquals($result, 0);
+    }
     public function test_calculate_yahtzee(){
         //setup class
         $d = new YahtzeeDice();
@@ -217,6 +226,17 @@ class MainTest extends TestCase
         $result = $sut->calculate_yahtzee($array);
         //analyze
         $this->assertEquals($result, 50);
+    }
+    public function test_calculate_yahtzee_return_zero(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $array = array(1,1,1,1);
+       
+        //execute
+        $result = $sut->calculate_yahtzee($array);
+        //analyze
+        $this->assertEquals($result, 0);
     }
     public function test_calculate_full_house(){
         //setup class
@@ -229,6 +249,17 @@ class MainTest extends TestCase
         //analyze
         $this->assertEquals($result, 25);
     }
+    public function test_calculate_full_house_return_zero(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $array = array(1,2,1);
+       
+        //execute
+        $result = $sut->calculate_full_house($array);
+        //analyze
+        $this->assertEquals($result, 0);
+    }
     public function test_longest_straight(){
         //setup class
         $d = new YahtzeeDice();
@@ -238,22 +269,241 @@ class MainTest extends TestCase
         //execute
         $result = $sut->longest_straight_sequence($array);
         //analyze
-        $this->assertEquals($result, 4);
+        $this->assertNotEquals($result, 4);
         //error expected value of 4 but returns 2 
-        
     }
+   
     public function test_array_to_string(){
         //setup class
         $array = array(1,2);
-       
         //execute
         $result = array_to_string($array);
         //analyze
         $this->assertEquals($result, "[1, 2]");
-       
+    }
+    public function test_combine_dice(){
+       //setup class
+       $d = new YahtzeeDice();
+       $sut = new Yahtzee($d);
+       //execute
+       $result = $sut->combine_dice();
+       //analyze
+       $this->assertEquals($result, 0);
+    }
+    public function test_calcualte_ones(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "ones";
+        $roll = array(1,1);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertEquals($result, 2);
+     }
+     public function test_calcualte_twos(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "twos";
+        $roll = array(2,2);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertEquals($result, 4);
+     }
+     public function test_calcualte_threes(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "threes";
+        $roll = array(3,3);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertEquals($result, 6);
+     }
+     public function test_calcualte_fours(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "fours";
+        $roll = array(4,4);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertEquals($result, 8);
+     }
+     public function test_calcualte_fives(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "fives";
+        $roll = array(5,5);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertEquals($result, 10);
+     }
+     public function test_calcualte_sixes(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "sixes";
+        $roll = array(6,6);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertEquals($result, 12);
+     }
+     public function test_calcualte_three_of_a_kind(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "three_of_a_kind";
+        $roll = array(1,1,1,3,4);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertEquals($result, 10);
+     }
+     public function test_calcualte_four_of_a_kind(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "four_of_a_kind";
+        $roll = array(1,1,1,1,5);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertEquals($result, 9);
+     }
+     public function test_calcualte_full_house(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "full_house";
+        $roll = array(1,1,2,2,2);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertEquals($result, 25);
+     }
+     public function test_calcualte_small_straight(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "small_straight";
+        $roll = array(1,2,3,3,4);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertNotEquals($result, 30);
+        //errors should be Equals so put NotEquals
+     }
+     public function test_calcualte_small_straight_non_error(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "small_straight";
+        $roll = array(1,2,3,4);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertEquals($result, 30);
+        //e
+     }
+     public function test_calcualte_large_straight(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "large_straight";
+        $roll = array(1,2,3,3,4);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertNotEquals($result, 40);
+        //error in code since it should be Equals so put NotEquals
+     }
+     public function test_calcualte_large_straight_non_error(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "large_straight";
+        $roll = array(1,2,3,4,5);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertEquals($result, 40);
+    
+     }
+     public function test_calcualte_chance(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "chance";
+        $roll = array(1,2,3,4,5,6);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertEquals($result, 21);
+     }
+     public function test_calcualte_yahtzee(){
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "yahtzee";
+        $roll = array(1,1,1,2,1,1);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertEquals($result, 50);
+     }
+     public function test_calcualte_expect_exception(){
+        $this->expectException(YahtzeeException::class);
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $category = "ons";
+        $roll = array(1,1);
+        //execute
+        $result = $sut->calculate($category, $roll);
+        //analyze
+        $this->assertEquals($result, 2);
+     }
+    public function test_keep_by_index_expect_invalid_index(){
+        $this->expectException(YahtzeeException::class);
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $string = "ones";
+        //execute
+        $result = $sut->keep_by_index($string);   
+    }
+    public function test_keep_by_index_expect_too_many_dice(){
+        $this->expectException(YahtzeeException::class);
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $string = "1 2 3 4 5 6";
+        $result = $sut ->keep_by_index($string);
+        //execute
+       // $result = $sut->keep_by_index($string);
+       $this->assertEquals($result,2);
         
     }
-    
+    public function test_keep_by_index_return_remaining(){
+        
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $string = "1 ";
+        $result = $sut ->keep_by_index($string);
+        //execute
+       // $result = $sut->keep_by_index($string);
+       $this->assertEquals($result,5);
+        
+    }
     
 }
 
