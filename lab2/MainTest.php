@@ -171,19 +171,41 @@ class MainTest extends TestCase
         $this->assertNotEquals($result, 40);
         //error expected value of 40 but returns 0
    }
+   public function test_calculate_large_straight_non_error(){
+    //setup class
+    $d = new YahtzeeDice();
+    $sut = new Yahtzee($d);
+    $array = array(1,2,3,4,5);
+    //execute
+    $result = $sut->calculate_large_straight($array);
+    //analyze
+    $this->assertEquals($result, 40);
+   
+}
     public function test_calculate_small_straight(){
        
          //setup class
          $d = new YahtzeeDice();
          $sut = new Yahtzee($d);
          $array = array(1,2,3,3,4);
-         $num = 1;
          //execute
          $result = $sut->calculate_small_straight($array);
          //analyze
          $this->assertNotEquals($result, 30);
          //error expected value of 40 but returns 0
     }
+    public function test_calculate_small_straight_non_error(){
+       
+        //setup class
+        $d = new YahtzeeDice();
+        $sut = new Yahtzee($d);
+        $array = array(1,2,3,4,5);
+
+        //execute
+        $result = $sut->calculate_small_straight($array);
+        //analyze
+        $this->assertEquals($result, 30);
+   }
     public function test_clear_kept_dice(){
         //setup class
         $d = new YahtzeeDice();
@@ -378,7 +400,7 @@ class MainTest extends TestCase
         //analyze
         $this->assertEquals($result, 9);
      }
-     public function test_calcualte_full_house(){
+     public function test_calcualte_method_full_house(){
         //setup class
         $d = new YahtzeeDice();
         $sut = new Yahtzee($d);
@@ -389,7 +411,7 @@ class MainTest extends TestCase
         //analyze
         $this->assertEquals($result, 25);
      }
-     public function test_calcualte_small_straight(){
+     public function test_calcualte_method_small_straight(){
         //setup class
         $d = new YahtzeeDice();
         $sut = new Yahtzee($d);
@@ -401,18 +423,7 @@ class MainTest extends TestCase
         $this->assertNotEquals($result, 30);
         //errors should be Equals so put NotEquals
      }
-     public function test_calcualte_small_straight_non_error(){
-        //setup class
-        $d = new YahtzeeDice();
-        $sut = new Yahtzee($d);
-        $category = "small_straight";
-        $roll = array(1,2,3,4);
-        //execute
-        $result = $sut->calculate($category, $roll);
-        //analyze
-        $this->assertEquals($result, 30);
-        //e
-     }
+   
      public function test_calcualte_large_straight(){
         //setup class
         $d = new YahtzeeDice();
@@ -425,18 +436,7 @@ class MainTest extends TestCase
         $this->assertNotEquals($result, 40);
         //error in code since it should be Equals so put NotEquals
      }
-     public function test_calcualte_large_straight_non_error(){
-        //setup class
-        $d = new YahtzeeDice();
-        $sut = new Yahtzee($d);
-        $category = "large_straight";
-        $roll = array(1,2,3,4,5);
-        //execute
-        $result = $sut->calculate($category, $roll);
-        //analyze
-        $this->assertEquals($result, 40);
     
-     }
      public function test_calcualte_chance(){
         //setup class
         $d = new YahtzeeDice();
