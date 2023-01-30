@@ -493,15 +493,19 @@ class MainTest extends TestCase
         
     }
     public function test_keep_by_index_return_remaining(){
-        
+        $stub = $this->createStub(YahtzeeDice::class);
+         $stub->method('roll')->willReturn(array(1,2,3,4,5));
         //setup class
         $d = new YahtzeeDice();
         $sut = new Yahtzee($d);
-        $string = "1 ";
+        $int = 5;
+        $string = "1 2 3 4";
+        $sut->roll($int);
+        $sut ->get_kept_dice();
         $result = $sut ->keep_by_index($string);
         //execute
        // $result = $sut->keep_by_index($string);
-       $this->assertEquals($result,5);
+       $this->assertEquals($result,1);
         
     }
     
