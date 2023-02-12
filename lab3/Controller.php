@@ -5,6 +5,7 @@ class YahtzeeController {
     
     private Yahtzee $model;
     private YahtzeeView $view;
+  
     
     public function __construct(Yahtzee $model, YahtzeeView $view){
         $this->model = $model;
@@ -71,7 +72,26 @@ class YahtzeeController {
           > If keep_by_index throws an exception, catch it and return -2.
             (output the error message with the view).
         */
-        
+        if($line == "exit" || $line == "q"){
+            return -1;
+        }
+        if($line == "" || $line == "none" || $line == "pass"){
+            return -2;
+        }
+        if($line == "all"){
+           $this->get_model()->combine_dice();
+           return 0;
+        }
+        try{
+          $result =  $this->get_model()->keep_by_index($line);
+        }
+        catch(Exception $result){
+          $this->view->output(strval($result));
+          return -2;
+         }
+          return $result;
+      
+       
     }
     
     public function handle_roll() : int {
