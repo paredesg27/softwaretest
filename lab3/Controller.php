@@ -5,6 +5,7 @@ class YahtzeeController {
     
     private Yahtzee $model;
     private YahtzeeView $view;
+    
   
     
     public function __construct(Yahtzee $model, YahtzeeView $view){
@@ -37,7 +38,7 @@ class YahtzeeController {
           user chose that category, based on the model's "kept_dice".
         */
         $rv = array();
-        
+        //?? what is asked??
         return $rv;
     }
     
@@ -54,7 +55,28 @@ class YahtzeeController {
           > Return -2, indicating an error occurred
         > If a valid category is given, it should update that category to the
           score calculated from the model's kept_dice attribute.
-        */
+        */ 
+        $scorecard = array(
+          "ones",
+          "twos",
+          "threes",
+          "fours",
+          "fives",
+          "sixes",
+          "three_of_a_kind",
+          "four_of_a_kind",
+          "full_house",
+          "small_straight",
+          "large_straight",
+          "chance",
+          "yahtzee"
+          );
+        if($line == "q" || $line == "exit"){
+          return -1;
+        }
+        elseif(array_key_exists($line,$scorecard)){
+            $this->get_model()->update_scorecard($line,$this->get_model()->get_kept_dice());
+        }
         
         return 0;
     }
@@ -72,6 +94,7 @@ class YahtzeeController {
           > If keep_by_index throws an exception, catch it and return -2.
             (output the error message with the view).
         */
+        
         if($line == "exit" || $line == "q"){
             return -1;
         }
