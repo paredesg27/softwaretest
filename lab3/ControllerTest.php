@@ -66,4 +66,31 @@ class ControllerTest extends TestCase
         $result = $this->sut->process_keep_input("1 2 3 4 5 6");
         $this->assertEquals(-2, $result);
     }
+    public function test_get_model(){
+        $result = $this->sut->get_model();
+        $this->assertNotNull($result);
+    }
+    public function test_get_view(){
+        $result = $this->sut->get_view();
+        $this->assertNotNull($result);
+    }
+    public function test_get_possible_categories(){
+        $result = $this->sut->get_possible_categories();
+        $this->assertEquals(0, array_sum($result));
+    }
+    public function test_process_score_input_q(){
+        $result = $this->sut->process_score_input("q");
+        $this->assertEquals(-1, $result);
+    }
+    public function test_process_score_input_exit(){
+        $result = $this->sut->process_score_input("exit");
+        $this->assertEquals(-1, $result);
+    }
+    public function test_process_score_input_ones(){
+        $stub = $this->createStub(YahtzeeDice::class);
+        $stub-> method('roll')->willReturn(array(1,1));
+        $this->model->get_kept_dice();
+        $result = $this->sut->process_score_input("ones");
+        $this->assertEquals(0, $result);
+    }
     }
