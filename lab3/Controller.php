@@ -38,7 +38,8 @@ class YahtzeeController {
           user chose that category, based on the model's "kept_dice".
         */
         $rv = array();
-        //?? what is asked??
+        $rv = $this->model->get_scorecard();
+        // echo(print_r($rv, true));
         return $rv;
     }
     
@@ -56,27 +57,27 @@ class YahtzeeController {
         > If a valid category is given, it should update that category to the
           score calculated from the model's kept_dice attribute.
         */ 
-        $scorecard = array(
-          "ones",
-          "twos",
-          "threes",
-          "fours",
-          "fives",
-          "sixes",
-          "three_of_a_kind",
-          "four_of_a_kind",
-          "full_house",
-          "small_straight",
-          "large_straight",
-          "chance",
-          "yahtzee"
-          );
+        // $scorecard = array(
+        //   "ones",
+        //   "twos",
+        //   "threes",
+        //   "fours",
+        //   "fives",
+        //   "sixes",
+        //   "three_of_a_kind",
+        //   "four_of_a_kind",
+        //   "full_house",
+        //   "small_straight",
+        //   "large_straight",
+        //   "chance",
+        //   "yahtzee"
+        //   );
         if($line == "q" || $line == "exit"){
           return -1;
         }
-        elseif(array_key_exists($line,$scorecard)){
-            $this->get_model()->update_scorecard($line,$this->get_model()->get_kept_dice());
-        }
+        // elseif(array_key_exists($line,$scorecard)){
+        //     $this->get_model()->update_scorecard($line,$this->get_model()->get_kept_dice());
+        // }
         
         return 0;
     }
@@ -145,6 +146,13 @@ class YahtzeeController {
         correct.  You'll want to stub the view to return pre-scripted
         responses, a good way to do this is a stub's onConsecutiveCalls method.
         */
+      
+      // for(i = 0; i < 2, i++){
+      //   $remaining_dice = 5;
+      //   $this->get_method()->ro;
+
+      // }
+
         
         return 0;
     }
@@ -171,6 +179,12 @@ class YahtzeeController {
         pre-scripted inputs.  Remember, we primarily want to test data and
         behavior, NOT implementation details.
         */
+        // $model_current_turn = 1;
+        // for( i = 0, i < 12, i++){
+        //   $this->view->output(strval($model_current_turn.toString));
+          
+        //   $model_current_turn ++;h
+        // }
         
         
         return 0;
