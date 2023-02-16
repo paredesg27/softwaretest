@@ -57,27 +57,20 @@ class YahtzeeController {
         > If a valid category is given, it should update that category to the
           score calculated from the model's kept_dice attribute.
         */ 
-        // $scorecard = array(
-        //   "ones",
-        //   "twos",
-        //   "threes",
-        //   "fours",
-        //   "fives",
-        //   "sixes",
-        //   "three_of_a_kind",
-        //   "four_of_a_kind",
-        //   "full_house",
-        //   "small_straight",
-        //   "large_straight",
-        //   "chance",
-        //   "yahtzee"
-        //   );
+    
+        $scorecardValues = $this->model->get_scorecard();
+        
         if($line == "q" || $line == "exit"){
           return -1;
         }
-        // elseif(array_key_exists($line,$scorecard)){
-        //     $this->get_model()->update_scorecard($line,$this->get_model()->get_kept_dice());
-        // }
+        elseif(array_key_exists($line, $scorecardValues)){
+          $dice = $this->get_model()->get_kept_dice();
+          echo(strval(array_sum($dice)));
+            $this->model->update_scorecard($line,array_sum($dice));
+        }
+        else{
+          return -2;
+        }
         
         return 0;
     }
