@@ -168,7 +168,7 @@ class ControllerTest extends TestCase
         $this->model->update_scorecard("yahtzee", array_sum($dice));
         $result = $this->sut->get_possible_categories();
         
-        $this->assertEquals($result['yahtzee'], array_sum($dice));
+        $this->assertEquals($result['yahtzee'], 7);
     }
      public function test_process_score_input_q(){
         $result = $this->sut->process_score_input("q");
@@ -181,16 +181,18 @@ class ControllerTest extends TestCase
     // public function test_process_score_input_exit_invalid_input(){
     //     //test
     // }
-    // public function test_process_score_input_ones(){
-    //     $stub = $this->createStub(YahtzeeDice::class);
-    //     $stub-> method('roll')->willReturn(array(1,1));
-    //     $this->model->get_kept_dice();
-    //     $result = $this->sut->process_score_input("ones");
-    //     $this->assertNull($result);
-    // }
-    // public function test_handle_roll(){
-    //     $result = $this->sut->handle_roll();
-    // }
+    public function test_process_score_input_ones(){
+        $stub = $this->createStub(YahtzeeDice::class);
+        // Configure the stub.
+        $stub->method("roll")->willReturn(array(1,1));
+        $this->model->roll(2);
+        $this->model->get_kept_dice();
+        $this->model->combine_dice();
+        
+        $result = $this->sut->process_score_input("ones");
+        $this->assertEquals($result, 5);
+    }
+    
     public function test_process_keep_input_exit() {
         //set up (done in fixture)
         
@@ -241,6 +243,8 @@ class ControllerTest extends TestCase
         $result = $this->sut->process_keep_input("1 2 3 4 5 6");
         $this->assertEquals(-2, $result);
     }
-   
+//    public function test_handle_roll(){
+//         $result = $this->sut->handle_roll();
+//     }
    
     }
