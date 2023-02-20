@@ -61,18 +61,19 @@ class YahtzeeController {
         //how to stub model's kept_dice attribute
         // 
 
-        $scorecardValues = $this->model->get_scorecard();
-        $dice = $this->get_model->get_kept_dice();
-        $dice = array(1,1,1,1);
+        $scorecardValues = $this->model->get_scorecard(); 
+        $dice = $this->model->get_kept_dice();
+        // echo(print_r($this->model->get_scorecard(), true));
+        // echo("$line\n");
         if($line == "q" || $line == "exit"){
           return -1;
         }
-        elseif(array_key_exists($line, $scorecardValues)){
+        if(array_key_exists($line, $scorecardValues)){
           //  $this->model->roll(5);
-          //  $dice = $this->get_model()->get_kept_dice();
+         
           // echo(strval(array_sum($dice)));
           $this->model->update_scorecard($line,array_sum($dice));
-          echo(print_r($this->model->get_scorecard(), true));
+          // echo(print_r($this->model->get_scorecard(), true));
         }
         else{
           foreach($scorecardValues as $key=>$value){
