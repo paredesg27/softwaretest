@@ -73,7 +73,7 @@ class ControllerTest extends TestCase
     public function test_get_possible_categories_fives(){
        $stub = $this->createStub(Yahtzee::class);
         // Configure the stub.
-      $stub->method('get_kept_dice')->willReturn(array(1,1,1,1,1));
+        $stub->method('get_kept_dice')->willReturn(array(1,1,1,1,1));
         $dice = $stub->get_kept_dice();
         $this->model->update_scorecard("fives", array_sum($dice));
         $result = $this->sut->get_possible_categories();
@@ -171,11 +171,28 @@ class ControllerTest extends TestCase
         $this->assertEquals(-1, $result);
     }
 
-    public function test_process_score_input_ones(){
-        $this->model = $this->createStub(Yahtzee::class);
+
+    // fwip
+    public function test_process_score_input_ones(){ 
+        $this->model = $this->CreateStub(Yahtzee::class);
+        $this->sut = new YahtzeeController($this->model, $this->view);
         $stub = $this->model;
         $stub->method('get_kept_dice')->willReturn(array(1,1,1,1,1));
-        
+        $stub->method('get_scorecard')->willReturn(array(
+            "ones" => NULL,
+            "twos" => NULL,
+            "threes" => NULL,
+            "fours" => NULL,
+            "fives" => NULL,
+            "sixes" => NULL,
+            "three_of_a_kind" => NULL,
+            "four_of_a_kind" => NULL,
+            "full_house" => NULL,
+            "small_straight" => NULL,
+            "large_straight" => NULL,
+            "chance" => NULL,
+            "yahtzee" => NULL
+        ));
         $result = $this->sut->process_score_input("ones");
         $this->assertEquals($result, 0);
     }
@@ -282,9 +299,9 @@ class ControllerTest extends TestCase
      // @cover main_loop
     public function test_main_loop_user_input_q(){
         $stub = $this->view;
-    $stub->method('get_user_input')->willReturnOnConsecutiveCalls("all","q");
-    $result = $this->sut->main_loop();
-    $this->assertEquals($result, -1);
+        $stub->method('get_user_input')->willReturnOnConsecutiveCalls("all","q");
+        $result = $this->sut->main_loop();
+        $this->assertEquals($result, -1);
     }
     
     }
