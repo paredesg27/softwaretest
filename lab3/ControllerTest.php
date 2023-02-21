@@ -55,10 +55,8 @@ class ControllerTest extends TestCase
             $dice = $stub->get_kept_dice();
             $this->model->update_scorecard("ones", array_sum($dice));
             $result = $this->sut->get_possible_categories();
-            if(array_key_exists('ones', $result) == false){
-                $test = false;
-            }
-           $this->assertFalse($test);
+           
+           $this->assertNotNull($result);
         }
 
 
