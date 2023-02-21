@@ -15,51 +15,70 @@ class ControllerTest extends TestCase
         $this->view = $this->createStub(YahtzeeView::class);
         $this->sut = new YahtzeeController($this->model, $this->view);
     } 
-    // @covers get_model()
+    /**
+    * @covers \YahtzeeController::get_model
+    */
     public function test_get_model(){
         $result = $this->sut->get_model();
         $this->assertNotNull($result);
     }
-    // @covers get_view()
+    /**
+    * @covers::get_view
+    */
     public function test_get_view(){
         $result = $this->sut->get_view();
         $this->assertNotNull($result);
     }
-    // @covers get_possibile_categories 
+
+
+    /**
+    * @covers \YahtzeeController::get_possible_categories
+    */
     public function test_get_possible_categories(){
         $result = $this->sut->get_possible_categories();
         $this->assertNotNull($result);
     }
+     /**
+    * @covers \YahtzeeController::get_possible_categories
+    */
     public function test_get_possible_categories_ones(){
         $result = $this->sut->get_possible_categories(); 
         $this->assertNull($result['ones']);
     }
+    /**
+    * @covers \YahtzeeController::get_possible_categories
+    */
     public function test_get_possible_categories_ones_not_null(){
-        //    $stub = $this->createStub(Yahtzee::class);
-        //     // Configure the stub.
-        //   $stub->method('get_kept_dice')->willReturn(array(1,1,1,1,1));
-        //     $dice = $stub->get_kept_dice();
-        //     $this->model->update_scorecard("ones", array_sum($dice));
+            $stub = $this->createStub(Yahtzee::class);
+            // Configure the stub.
+            $stub->method('get_kept_dice')->willReturn(array(1,1,1,1,1));
+            $dice = $stub->get_kept_dice();
+            $this->model->update_scorecard("ones", array_sum($dice));
             $result = $this->sut->get_possible_categories();
-            
-            $this->assertNull($result['ones'], 5);
+            if(array_key_exists('ones', $result) == false){
+                $test = false;
+            }
+           $this->assertFalse($test);
         }
-        //@covers get_possible_categories
-    public function test_get_possible_categories_yahtzee(){
-        $result = $this->sut->get_possible_categories();  
-        $this->assertNull($result['yahtzee']);
-    }
-    // @cover process_score_input
+
+
+    /**
+    * @covers \YahtzeeController::process_score_input
+    */
      public function test_process_score_input_q(){
         $result = $this->sut->process_score_input("q");
         $this->assertEquals(-1, $result);
     }
-     // @cover process_score_input
+     /**
+    * @covers \YahtzeeController::process_score_input
+    */
     public function test_process_score_input_exit(){
         $result = $this->sut->process_score_input("exit");
         $this->assertEquals(-1, $result);
     }
-    // @cover process_score_input
+    /**
+    * @covers \YahtzeeController::process_score_input
+    */
     public function test_process_score_input_ones(){ 
         $this->model = $this->CreateStub(Yahtzee::class);
         $this->sut = new YahtzeeController($this->model, $this->view);
@@ -83,13 +102,15 @@ class ControllerTest extends TestCase
         $result = $this->sut->process_score_input("ones");
         $this->assertEquals($result, 0);
     }
-     // @cover process_score_input
+     /**
+    * @covers \YahtzeeController::process_score_input
+    */
     public function test_process_score_input_invalid_category(){
         $result = $this->sut->process_score_input("aple");
         $this->assertEquals($result, -2);
     }
      /**
-    * @covers::process_keep_input()
+    * @covers \YahtzeeController::process_keep_input
     */
     public function test_process_keep_input_exit() {
         //set up (done in fixture)
@@ -101,7 +122,7 @@ class ControllerTest extends TestCase
     
     }
   /**
-    * @covers::process_keep_input()
+    * @covers \YahtzeeController::process_keep_input
     */
     public function test_process_keep_input_q() {
         //set up (done in fixture)
@@ -109,7 +130,7 @@ class ControllerTest extends TestCase
         $this->assertEquals(-1, $result);
     }
    /**
-    * @covers::process_keep_input()
+    * @covers \YahtzeeController::process_keep_input
     */
     public function test_process_keep_input_do_nothing(){
         //> If the line given is "none" "pass" or blank "", return -2.
@@ -117,7 +138,7 @@ class ControllerTest extends TestCase
         $this->assertEquals(-2, $result);
     }
    /**
-    * @covers::process_keep_input()
+    * @covers \YahtzeeController::process_keep_input
     */
     public function test_process_keep_input_do_nothing1(){
         //> If the line given is "none" "pass" or blank "", return -2.
@@ -125,7 +146,7 @@ class ControllerTest extends TestCase
         $this->assertEquals(-2, $result);
     }
    /**
-    * @covers::process_keep_input()
+    * @covers \YahtzeeController::process_keep_input
     */
     public function test_process_keep_input_do_nothing2(){
         //> If the line given is "none" "pass" or blank "", return -2.
@@ -133,7 +154,7 @@ class ControllerTest extends TestCase
         $this->assertEquals(-2, $result);
     }
    /**
-    * @covers::process_keep_input()
+    * @covers \YahtzeeController::process_keep_input
     */
     public function test_process_keep_input_all(){
         $this->sut->get_model()->roll(5);
@@ -142,7 +163,7 @@ class ControllerTest extends TestCase
         $this->assertEquals(5, count($this->sut->get_model()->get_kept_dice()));
     }
     /**
-    * @covers::process_keep_input()
+    * @covers \YahtzeeController::process_keep_input
     */
     public function test_process_keep_input_valid_index(){
              $this->sut->get_model()->roll(5);
@@ -150,33 +171,33 @@ class ControllerTest extends TestCase
             $this->assertEquals(4, $result);
         }
         /**
-    * @covers::process_keep_input()
+    * @covers \YahtzeeController::process_keep_input
     */
     public function test_process_keep_input_throw_exception_invalid_index(){
         $result = $this->sut->process_keep_input("ons");
         $this->assertEquals(-2, $result);
     }
     /**
-    * @covers::process_keep_input()
+    * @covers \YahtzeeController::process_keep_input
     */
     public function test_process_keep_input_throw_exception_too_many_dice(){
         $result = $this->sut->process_keep_input("1 2 3 4 5 6");
         $this->assertEquals(-2, $result);
     }
     /**
-    * @covers::handle_roll()
+    * @covers \YahtzeeController::handle_roll
         */
    public function test_handle_roll(){
         $result = $this->sut->handle_roll();
         $this->assertEquals($result, 0);
     }
      /**
-    * @covers::handle_roll()
+    * @covers \YahtzeeController::handle_roll
         */
     public function test_handle_roll_correct_user_strings(){
         $this->model = $this->CreateStub(Yahtzee::class);
         $this->sut = new YahtzeeController($this->model, $this->view);
-        $stub = $this->view;
+        $stub = $this->model;
         $stub->method('get_kept_dice')->willReturnOnConsecutiveCalls(array(1,1), array(3), array(5));
         $stub->method('get_scorecard')->willReturn(array(
             "ones" => NULL,
@@ -193,12 +214,13 @@ class ControllerTest extends TestCase
             "chance" => NULL,
             "yahtzee" => NULL
         ));
-        $stub->method('get_user_input')->willReturnOnConsecutiveCalls("ones","threes","fives");
+        $stub2 = $this->view;
+        $stub2->method('get_user_input')->willReturnOnConsecutiveCalls("ones","threes","fives");
         $result = $this->sut->handle_roll();
         $this->assertEquals($result, 0);
     }    
      /**
-    * @covers::handle_roll()
+    * @covers \YahtzeeController::handle_roll
         */
     public function test_handle_roll_invalid_user_strings(){
         $stub = $this->view;
@@ -207,7 +229,7 @@ class ControllerTest extends TestCase
         $this->assertEquals($result, 0);
     }
      /**
-    * @covers::handle_roll()
+    * @covers \YahtzeeController::handle_roll
         */
     public function test_handle_roll_q_user_string(){
         $stub = $this->view;
@@ -216,14 +238,14 @@ class ControllerTest extends TestCase
         $this->assertEquals($result, -1);
     }
         /**
-    * @covers::main_loop()
+    * @covers \YahtzeeController::main_loop
         */
     public function test_main_loop(){
         $result = $this->sut->main_loop();
         $this->assertEquals($result, 0);
     }
       /**
-    * @covers::main_loop()
+    * @covers \YahtzeeController::main_loop
         */
     public function test_main_loop_roll_q(){
         $stub = $this->view;
@@ -231,9 +253,9 @@ class ControllerTest extends TestCase
         $result = $this->sut->main_loop();
         $this->assertEquals($result, -1);
     }
-     /**
-    * @covers::main_loop()
-        */
+    /**
+    * @covers \YahtzeeController::main_loop
+    */
     public function test_main_loop_user_input_q(){
         $stub = $this->view;
         $stub->method('get_user_input')->willReturnOnConsecutiveCalls("all","q");
