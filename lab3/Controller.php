@@ -28,7 +28,7 @@ class YahtzeeController {
         */
         return $this->view;
     }
-    
+    //not done
     public function get_possible_categories() : array {
         /*
         get_possible_categories() : array
@@ -42,7 +42,7 @@ class YahtzeeController {
         // echo(print_r($rv, true));
         return $rv;
     }
-    
+    //not done
     public function process_score_input(string $line) : int {
         /*
         process_score_input(string: $line) : int
@@ -78,7 +78,7 @@ class YahtzeeController {
         else{
           foreach($scorecardValues as $key=>$value){
             if(is_null($scorecardValues[$key])){
-              $this->model->update_scorecard($key, 1);
+              $this->model->update_scorecard($key, array_sum($dice));
               break;
             }
           
@@ -157,14 +157,14 @@ class YahtzeeController {
        
         $this->get_model()->roll($remaining_dice);
         $inputValue = $this->get_view()->get_user_input("test");
-       
+       echo(strval($remaining_dice));
         $result = $this->process_keep_input($inputValue);
         if($result == -2){}
         elseif($result == -1){
           return -1;
         }
         else{
-          return $remaining_dice;
+          $remaining_dice = $result;
         }
         if($remaining_dice == 0){
           break;
@@ -204,6 +204,7 @@ class YahtzeeController {
         */
 
         for($i = 0; $i < 13; $i++){
+          
           $rollValue = $this->handle_roll();
           if($rollValue == -1){
             return -1;
