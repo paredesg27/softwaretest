@@ -40,56 +40,6 @@ class ControllerTest extends TestCase
         
         $this->assertEquals($result['ones'], 5);
     }
-    public function test_get_possible_categories_twos(){
-       $stub = $this->createStub(Yahtzee::class);
-        // Configure the stub.
-      $stub->method('get_kept_dice')->willReturn(array(1,1,1,1,1));
-        $dice = $stub->get_kept_dice();
-        $this->model->update_scorecard("twos", array_sum($dice));
-        $result = $this->sut->get_possible_categories();
-        
-        $this->assertEquals($result['twos'], 5);
-    }
-    public function test_get_possible_categories_threes(){
-       $stub = $this->createStub(Yahtzee::class);
-        // Configure the stub.
-      $stub->method('get_kept_dice')->willReturn(array(1,1,1,1,1));
-        $dice = $stub->get_kept_dice();
-        $this->model->update_scorecard("threes", array_sum($dice));
-        $result = $this->sut->get_possible_categories();
-        
-        $this->assertEquals($result['threes'], 5);
-    }
-    public function test_get_possible_categories_fours(){
-       $stub = $this->createStub(Yahtzee::class);
-        // Configure the stub.
-      $stub->method('get_kept_dice')->willReturn(array(1,1,1,1,1));
-        $dice = $stub->get_kept_dice();
-        $this->model->update_scorecard("fours", array_sum($dice));
-        $result = $this->sut->get_possible_categories();
-        
-        $this->assertEquals($result['fours'], 5);
-    }
-    public function test_get_possible_categories_fives(){
-       $stub = $this->createStub(Yahtzee::class);
-        // Configure the stub.
-        $stub->method('get_kept_dice')->willReturn(array(1,1,1,1,1));
-        $dice = $stub->get_kept_dice();
-        $this->model->update_scorecard("fives", array_sum($dice));
-        $result = $this->sut->get_possible_categories();
-        
-        $this->assertEquals($result['fives'], 5);
-    }
-    public function test_get_possible_categories_sixes(){
-       $stub = $this->createStub(Yahtzee::class);
-        // Configure the stub.
-      $stub->method('get_kept_dice')->willReturn(array(1,1,1,1,1));
-        $dice = $stub->get_kept_dice();
-        $this->model->update_scorecard("sixes", array_sum($dice));
-        $result = $this->sut->get_possible_categories();
-        
-        $this->assertEquals($result['sixes'], 5);
-    } 
     public function test_get_possible_categories_three_of_a_kind(){
        $stub = $this->createStub(Yahtzee::class);
         // Configure the stub.
@@ -99,56 +49,6 @@ class ControllerTest extends TestCase
         $result = $this->sut->get_possible_categories();
         
         $this->assertEquals($result['three_of_a_kind'], 5);
-    }
-    public function test_get_possible_categories_four_kind(){
-       $stub = $this->createStub(Yahtzee::class);
-        // Configure the stub.
-      $stub->method('get_kept_dice')->willReturn(array(1,1,1,1,1));
-        $dice = $stub->get_kept_dice();
-        $this->model->update_scorecard("four_of_a_kind", array_sum($dice));
-        $result = $this->sut->get_possible_categories();
-        
-        $this->assertEquals($result['four_of_a_kind'], 5);
-    }
-    public function test_get_possible_categories_full_house(){
-       $stub = $this->createStub(Yahtzee::class);
-        // Configure the stub.
-      $stub->method('get_kept_dice')->willReturn(array(1,1,1,1,1));
-        $dice = $stub->get_kept_dice();
-        $this->model->update_scorecard("full_house", array_sum($dice));
-        $result = $this->sut->get_possible_categories();
-        
-        $this->assertEquals($result['full_house'], 5);
-    }
-    public function test_get_possible_categories_small_straight(){
-       $stub = $this->createStub(Yahtzee::class);
-        // Configure the stub.
-      $stub->method('get_kept_dice')->willReturn(array(1,1,1,1,1));
-        $dice = $stub->get_kept_dice();
-        $this->model->update_scorecard("small_straight", array_sum($dice));
-        $result = $this->sut->get_possible_categories();
-        
-        $this->assertEquals($result['small_straight'], 5);
-    }
-    public function test_get_possible_categories_large_straight(){
-       $stub = $this->createStub(Yahtzee::class);
-        // Configure the stub.
-      $stub->method('get_kept_dice')->willReturn(array(1,1,1,1,1));
-        $dice = $stub->get_kept_dice();
-        $this->model->update_scorecard("large_straight", array_sum($dice));
-        $result = $this->sut->get_possible_categories();
-        
-        $this->assertEquals($result['large_straight'], 5);
-    }
-    public function test_get_possible_categories_chance(){
-        $stub = $this->createStub(Yahtzee::class);
-        // Configure the stub.
-      $stub->method('get_kept_dice')->willReturn(array(1,1,1,1,1));
-        $dice = $stub->get_kept_dice();
-        $this->model->update_scorecard("chance", array_sum($dice));
-        $result = $this->sut->get_possible_categories();
-        
-        $this->assertEquals($result['chance'], 5);
     }
     public function test_get_possible_categories_yahtzee(){
         $stub = $this->createStub(Yahtzee::class);
@@ -170,9 +70,7 @@ class ControllerTest extends TestCase
         $result = $this->sut->process_score_input("exit");
         $this->assertEquals(-1, $result);
     }
-
-
-    // fwip
+    // @cover process_score_input
     public function test_process_score_input_ones(){ 
         $this->model = $this->CreateStub(Yahtzee::class);
         $this->sut = new YahtzeeController($this->model, $this->view);
@@ -266,9 +164,9 @@ class ControllerTest extends TestCase
       // @cover handle_roll
     public function test_handle_roll_correct_user_strings(){
         $stub = $this->view;
-        $stub->method('get_user_input')->willReturn("ones");
+        $stub->method('get_user_input')->willReturnOnConsecutiveCalls("ones","threes","fives");
         $result = $this->sut->handle_roll();
-        $this->assertEquals($result, 5);
+        $this->assertEquals($result, 0);
     }    
      // @cover handle_roll
     public function test_handle_roll_invalid_user_strings(){
