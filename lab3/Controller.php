@@ -39,6 +39,11 @@ class YahtzeeController {
         */
         $rv = array();
         $rv = $this->model->get_scorecard();
+        foreach($rv as $key=>$value){
+          if(is_null($rv[$key]) == false){
+            unset($rv[$key]);
+          }
+        }
         // echo(print_r($rv, true));
         return $rv;
     }
@@ -157,7 +162,7 @@ class YahtzeeController {
        
         $this->get_model()->roll($remaining_dice);
         $inputValue = $this->get_view()->get_user_input("test");
-       echo(strval($remaining_dice));
+      //  echo(strval($remaining_dice));
         $result = $this->process_keep_input($inputValue);
         if($result == -2){}
         elseif($result == -1){
